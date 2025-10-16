@@ -1,105 +1,165 @@
-
 # Dotfiles
 
-Este repositorio contiene archivos de configuración para el entorno de desarrollo en macOS/Linux.
+Mi configuración personal de terminal y herramientas de desarrollo.
 
-## 📁 Estructura del Repositorio
+## 🚀 Características
 
-```
-dotfiles/
-├── README.md       # Este archivo
-└── .zshrc         # Configuración de Zsh shell
-```
+- **Oh My Zsh** - Framework para gestión de zsh
+- **Powerlevel10k** - Tema moderno y rápido para el prompt
+- **Plugins útiles**:
+  - `zsh-autosuggestions` - Sugerencias automáticas mientras escribes
+  - `zsh-syntax-highlighting` - Resaltado de sintaxis en tiempo real
+  - Git, Docker, npm, yarn, node - Atajos y autocompletado
 
-## 🛠️ Configuraciones Incluidas
+## 📦 Instalación
 
-### `.zshrc` - Configuración de Zsh Shell
-
-Este archivo contiene:
-
-- **Alias útiles:**
-  - `cdc`: Navega rápidamente al directorio `~/code`
-  - `cls`: Limpia la terminal (equivalente a `clear`)
-
-- **Configuración de Node.js:**
-  - Configuración automática de NVM (Node Version Manager)
-  - PATH configurado para Node.js v20.* y herramientas relacionadas
-
-- **Configuración de Homebrew:**
-  - PATH configurado para acceder a herramientas instaladas via Homebrew
-
-## 🚀 Instalación
-
-### Clonar el Repositorio
+### 1. Instalar Oh My Zsh
 
 ```bash
-git clone <url-del-repositorio> ~/dotfiles
-cd ~/dotfiles
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-### Crear Enlaces Simbólicos
-
-Para aplicar las configuraciones, crea enlaces simbólicos desde tu directorio home hacia los archivos de configuración:
+### 2. Instalar Powerlevel10k
 
 ```bash
-# Enlazar configuración de Zsh
-ln -sf ~/dotfiles/.zshrc ~/.zshrc
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
 
-### Aplicar Cambios
+### 3. Instalar Plugins
 
-Después de crear los enlaces, recarga tu shell:
+```bash
+# Autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# Syntax Highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
+### 4. Instalar Fuente Nerd Font
+
+```bash
+brew install font-meslo-lg-nerd-font
+```
+
+### 5. Copiar configuración
+
+```bash
+cp ~/.zshrc ~/.zshrc.backup  # Backup de tu configuración actual (opcional)
+cp ~/dotfiles/.zshrc ~/.zshrc
+```
+
+### 6. Aplicar cambios
 
 ```bash
 source ~/.zshrc
 ```
 
-## 📋 Prerequisitos
+## 🎨 Configurar Powerlevel10k
 
-Antes de usar estas configuraciones, asegúrate de tener instalado:
+La primera vez que abras el terminal después de la instalación, se ejecutará automáticamente el asistente de configuración de Powerlevel10k.
 
-- **Zsh**: Viene preinstalado en macOS Catalina+ y la mayoría de distribuciones Linux modernas
-- **NVM**: Para gestión de versiones de Node.js
-- **Homebrew** (macOS): Gestor de paquetes para macOS
-
-### Instalación de Prerequisitos
+Si quieres reconfigurarlo más tarde:
 
 ```bash
-# Instalar NVM
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-
-# Instalar Homebrew (solo macOS)
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+p10k configure
 ```
 
-## 🔧 Personalización
+## ⚙️ Configuración de Cursor/VSCode
 
-Puedes personalizar las configuraciones editando directamente los archivos en este repositorio. Los cambios se aplicarán automáticamente gracias a los enlaces simbólicos.
+Agrega estas líneas a tu `settings.json`:
 
-### Añadir Más Alias
-
-Edita `.zshrc` y añade tus alias personalizados:
-
-```bash
-alias tu_alias="tu_comando"
+```json
+{
+  "terminal.integrated.fontFamily": "MesloLGM Nerd Font Mono",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.wordWrap": "on"
+}
 ```
 
-## ⚠️ Notas Importantes
+Ubicación del archivo:
+- **Cursor**: `~/Library/Application Support/Cursor/User/settings.json`
+- **VSCode**: `~/Library/Application Support/Code/User/settings.json`
 
-- Los enlaces simbólicos sobrescribirán tus archivos de configuración existentes
-- Se recomienda hacer una copia de seguridad de tus configuraciones actuales antes de aplicar estos dotfiles
-- Este repositorio está optimizado para macOS pero también funciona en Linux
+## 📝 Aliases Disponibles
 
-## 🔄 Actualización
+### General
+- `cdc` - Ir a la carpeta de código (`~/code`)
+- `cls` - Limpiar terminal
 
-Para actualizar las configuraciones:
+### SaaS Vue
+- `saas` - Abrir el workspace de SaaS Vue en Cursor
+- `saas-root` - Navegar al root del proyecto SaaS
+- `saas-vue` - Navegar al directorio de SaaS Vue
 
+## 🔄 Sincronización
+
+Para mantener tu configuración actualizada:
+
+### Guardar cambios
 ```bash
+cp ~/.zshrc ~/dotfiles/.zshrc
 cd ~/dotfiles
-git pull origin main
-source ~/.zshrc  # Recargar configuraciones
+git add .zshrc
+git commit -m "Update zsh configuration"
+git push
 ```
 
-## 🤝 Contribución
+### Aplicar cambios desde el repo
+```bash
+cp ~/dotfiles/.zshrc ~/.zshrc
+source ~/.zshrc
+```
 
-Si quieres añadir más configuraciones o mejorar las existentes, siéntete libre de crear un pull request.
+## 🛠️ Personalización
+
+### Agregar nuevos alias
+
+Edita el archivo `~/.zshrc` en la sección de ALIASES:
+
+```bash
+# En ~/.zshrc
+alias mi-alias="comando"
+```
+
+### Agregar nuevos plugins
+
+Añade el plugin al array de plugins en `~/.zshrc`:
+
+```bash
+plugins=(
+  git
+  zsh-autosuggestions
+  # ... otros plugins
+  tu-nuevo-plugin
+)
+```
+
+Lista de plugins disponibles: [Oh My Zsh Plugins](https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins)
+
+## 📚 Recursos
+
+- [Oh My Zsh Documentation](https://github.com/ohmyzsh/ohmyzsh/wiki)
+- [Powerlevel10k Documentation](https://github.com/romkatv/powerlevel10k)
+- [Nerd Fonts](https://www.nerdfonts.com/)
+
+## 🐛 Troubleshooting
+
+### Los iconos no se ven correctamente
+Asegúrate de que tu terminal esté usando la fuente Nerd Font (`MesloLGM Nerd Font Mono`).
+
+### El prompt es muy lento
+Ejecuta `p10k configure` y elige opciones más ligeras, o desactiva algunos elementos del prompt.
+
+### Los plugins no funcionan
+Verifica que los plugins estén instalados correctamente en:
+```bash
+ls ~/.oh-my-zsh/custom/plugins/
+```
+
+### Revertir cambios
+Si algo sale mal, restaura tu backup:
+```bash
+cp ~/.zshrc.backup ~/.zshrc
+source ~/.zshrc
+```

@@ -1,0 +1,15 @@
+# Backups
+*.backup
+*.backup.*
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Powerlevel10k config (personal)
+.p10k.zsh
